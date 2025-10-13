@@ -69,28 +69,28 @@
       <div class="col-md-6" data-aos="fade-right">
         <div id="productCarousel" class="carousel slide product-carousel" data-bs-ride="carousel">
           <div class="carousel-inner">
-            <div class="carousel-item active">
-              <img src="https://picsum.photos/600/400?random=101" class="d-block w-100" alt="Gambar Produk 1">
+          <div class="carousel-item active">
+              <img id="product-img-1" src="https://picsum.photos/600/400?random=101" class="d-block w-100" alt="Gambar Produk 1">
             </div>
             <div class="carousel-item">
-              <img src="https://picsum.photos/600/400?random=102" class="d-block w-100" alt="Gambar Produk 2">
+              <img id="product-img-2" src="https://picsum.photos/600/400?random=102" class="d-block w-100" alt="Gambar Produk 2">
             </div>
             <div class="carousel-item">
-              <img src="https://picsum.photos/600/400?random=103" class="d-block w-100" alt="Gambar Produk 3">
+              <img id="product-img-3" src="https://picsum.photos/600/400?random=103" class="d-block w-100" alt="Gambar Produk 3">
             </div>
           </div>
         </div>
         <div class="d-flex thumbnail-row mt-2 justify-content-center">
-          <img src="https://picsum.photos/600/400?random=101" class="active-thumb" onclick="changeSlide(0)">
-          <img src="https://picsum.photos/600/400?random=102" onclick="changeSlide(1)">
-          <img src="https://picsum.photos/600/400?random=103" onclick="changeSlide(2)">
+          <img id="thumb-1" src="https://picsum.photos/600/400?random=101" class="active-thumb" onclick="changeSlide(0)">
+          <img id="thumb-2" src="https://picsum.photos/600/400?random=102" onclick="changeSlide(1)">
+          <img id="thumb-3" src="https://picsum.photos/600/400?random=103" onclick="changeSlide(2)">
         </div>
       </div>
 
       <!-- Grid 2: Info Produk -->
       <div class="col-md-6 product-info" data-aos="fade-left">
-        <h2>Nama Produk Premium</h2>
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Produk ini hadir dengan kualitas terbaik dan desain elegan.</p>
+        <h2 id="product-title">Nama Produk Premium</h2>
+        <p id="product-desc">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Produk ini hadir dengan kualitas terbaik dan desain elegan.</p>
         <div class="contact-buttons mt-3">
           <a href="https://instagram.com" target="_blank" class="btn-ig"><i class="fab fa-instagram"></i> IG</a>
           <a href="https://wa.me/6282218866002" target="_blank" class="btn-wa"><i class="fab fa-whatsapp"></i> WA</a>
@@ -126,6 +126,37 @@
 <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
 <script>
   AOS.init({ duration: 800, once: true });
+
+  // Get URL parameters
+  function getUrlParameter(name) {
+    name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+    const regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+    const results = regex.exec(location.search);
+    return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+  }
+
+  // Load product details from URL
+  window.onload = function() {
+    const title = getUrlParameter('title');
+    const desc = getUrlParameter('desc');
+    const img = getUrlParameter('img');
+
+    if (title) {
+      document.getElementById('product-title').textContent = title;
+    }
+    if (desc) {
+      document.getElementById('product-desc').textContent = desc;
+    }
+    if (img) {
+      document.getElementById('product-img-1').src = img;
+      document.getElementById('thumb-1').src = img;
+      // For simplicity, set the same image for all carousel items
+      document.getElementById('product-img-2').src = img;
+      document.getElementById('product-img-3').src = img;
+      document.getElementById('thumb-2').src = img;
+      document.getElementById('thumb-3').src = img;
+    }
+  };
 
   // Carousel thumbnail click
   function changeSlide(index) {
